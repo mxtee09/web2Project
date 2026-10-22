@@ -1,0 +1,9 @@
+.bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+input { padding: 6px; width: 90px; border: 1px solid #b0bec5; border-radius: 6px; }
+button { padding: 8px 12px; border: 0; border-radius: 6px; background: #1e88e5; color: #fff; cursor: pointer; }
+button.go { background: #2e7d32; font-size: 1.1em; } button.gray { background: #78909c; } button.red { background: #e53935; }
+#map { height: 65vh; border-radius: 10px; margin-bottom: 12px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eceff1; }
+.dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; vertical-align: middle; }
+:host ::ng-deep .num { background: transparent; border: 0; box-shadow: none; font-weight: bold; padding: 0; }

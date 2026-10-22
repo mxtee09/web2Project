@@ -1,0 +1,37 @@
+<h2>{{ form.id ? 'แก้ไขลูกค้า' : 'เพิ่มลูกค้า' }}</h2>
+<div class="card grid">
+  <input [(ngModel)]="form.firstname" placeholder="ชื่อ" />
+  <input [(ngModel)]="form.lastname" placeholder="นามสกุล" />
+  <input [(ngModel)]="form.phone" placeholder="เบอร์โทร" />
+  <input type="number" step="any" [(ngModel)]="form.lat" placeholder="ละติจูด" />
+  <input type="number" step="any" [(ngModel)]="form.lng" placeholder="ลองจิจูด" />
+  <button (click)="save()">{{ form.id ? 'อัปเดต' : 'เพิ่ม' }}</button>
+  @if (form.id) { <button class="gray" (click)="form = empty()">ยกเลิก</button> }
+</div>
+@if (msg()) { <p class="msg">{{ msg() }}</p> }
+
+<h2>ค้นหาลูกค้า</h2>
+<div class="card">
+  <input [(ngModel)]="keyword" (keyup.enter)="search()" placeholder="ชื่อ / นามสกุล / เบอร์โทร" />
+  <button (click)="search()">ค้นหา</button>
+</div>
+<table>
+  <tr><th>ชื่อ</th><th>เบอร์</th><th>พิกัด</th><th>สั่งกี่กล่อง</th><th></th></tr>
+  @for (c of customers(); track c.id) {
+    <tr>
+      <td>{{ c.firstname }} {{ c.lastname }}</td><td>{{ c.phone }}</td><td>{{ c.lat }}, {{ c.lng }}</td>
+      <td><input class="sm" type="number" min="1" max="3" [(ngModel)]="qty[c.id!]" placeholder="1" />
+          <button (click)="order(c)">สั่ง</button></td>
+      <td><button class="gray" (click)="edit(c)">แก้ไข</button> <button class="red" (click)="remove(c)">ลบ</button></td>
+    </tr>
+  }
+</table>
+
+<h2>ออเดอร์ทั้งหมด ({{ orders().length }})</h2>
+<table>
+  <tr><th>#</th><th>ลูกค้า</th><th>กล่อง</th><th>เวลา</th><th></th></tr>
+  @for (o of orders(); track o.id) {
+    <tr><td>{{ o.id }}</td><td>{{ o.firstname }} {{ o.lastname }}</td><td>{{ o.quantity }}</td><td>{{ o.order_date }}</td>
+      <td><button class="gray" (click)="editOrder(o)">แก้ไข</button> <button class="red" (click)="removeOrder(o)">ลบ</button></td></tr>
+  }
+</table>

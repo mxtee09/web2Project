@@ -1,0 +1,21 @@
+<div class="bar">
+  <span class="depot">ร้าน: มหาวิทยาลัยมหาสารคาม (ม.ใหม่) · {{ depot.lat }}, {{ depot.lng }}</span>
+  <label>ไรเดอร์ขั้นต่ำ <input type="number" min="1" [(ngModel)]="riders" /></label>
+  <button class="go" (click)="generate()">จัดเส้นทาง</button>
+  <button class="gray" (click)="mock()">สร้างข้อมูลจำลอง</button>
+  <button class="red" (click)="clear()">ล้างออเดอร์</button>
+  <span>{{ msg() }}</span>
+</div>
+<div id="map"></div>
+@if (plan(); as p) {
+  <table>
+    <tr><th>ไรเดอร์</th><th>กล่อง</th><th>จุดส่ง</th><th>ระยะทาง</th><th>เวลารวม</th><th>กลับร้าน</th><th>สถานะ</th></tr>
+    @for (r of p.riders; track r.no) {
+      <tr>
+        <td><span class="dot" [style.background]="r.color"></span> คนที่ {{ r.no }}</td>
+        <td>{{ r.boxes }}/10</td><td>{{ r.stops.length }}</td><td>{{ r.km }} กม.</td><td>{{ r.minutes }} นาที</td><td>{{ r.backEta }}</td>
+        <td>{{ r.stops.some(s => s.late) ? '⚠️ มีส่งเลท' : '✅ ทันเวลา' }}</td>
+      </tr>
+    }
+  </table>
+}
