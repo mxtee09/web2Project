@@ -1,0 +1,22 @@
+@if (!no) {
+  <div class="box"><h2>ไรเดอร์เข้าสู่ระบบ</h2>
+    <input type="number" min="1" [(ngModel)]="input" placeholder="หมายเลขไรเดอร์" />
+    <button (click)="login()">ดูใบงาน</button></div>
+} @else if (!rider) {
+  <div class="box"><h2>ไม่พบใบงานของไรเดอร์ {{ no }}</h2><p>ให้เจ้าของร้านกด "จัดเส้นทาง" ก่อน</p></div>
+} @else {
+  <div class="box">
+    <h2>ใบงานไรเดอร์คนที่ {{ rider.no }}</h2>
+    <p class="big">หยิบข้าวกล่องทั้งหมด <b>{{ rider.boxes }}</b> กล่อง · {{ rider.stops.length }} จุด · {{ rider.km }} กม.</p>
+    <ol>
+      @for (s of rider.stops; track $index) {
+        <li [class.late]="s.late">
+          <b>จุดที่ {{ $index + 1 }}</b> ส่งบ้านคุณ {{ s.name }} ({{ s.qty }} กล่อง) <small>ถึงประมาณ {{ s.eta }}</small>
+          <a [href]="navTo(s.lat, s.lng)" target="_blank">นำทาง</a>
+        </li>
+      }
+      <li><b>เสร็จแล้ว ขับกลับร้าน</b> <small>{{ rider.backEta }}</small></li>
+    </ol>
+    <a class="map" [href]="mapUrl" target="_blank">🗺️ เปิดแผนที่ทั้งเส้นทาง</a>
+  </div>
+}
